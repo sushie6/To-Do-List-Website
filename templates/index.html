@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Todo List</h1>
+<form action="{{ url_for('add') }}" method="POST">
+    <input type="text" name="task" placeholder="Add new task" required autocomplete="off">
+    <input type="submit" value="Add Task">
+</form>
+<ul>
+    {% for task in tasks %}
+    <li>
+        <span style="{% if task.completed %}text-decoration: line-through;{% endif %}">
+            {{ task.content }}
+        </span>
+        <div>
+            <button onclick="window.location.href='{{ url_for('complete', task_id=loop.index0) }}'">✓</button>
+            <button class="delete" onclick="window.location.href='{{ url_for('delete', task_id=loop.index0) }}'">✗</button>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
